@@ -14,17 +14,20 @@ class Settings:
             self.config = json.load(config_file)
 
         # initialize variables
-        self.ADAPTER_CONFIG = self.config['adapter_config']
+        self.ALPACA_CONFIG = self.config['alpaca_config']
 
         self.stocks = self.config["stocks"]  # a list of stocks to query / buy
         self.buying_power = self.config["buying_power"]  # in whatever currency
+        self.MONGO_URI = self.config["mongo_uri"]
 
         try:
             self.TIMEOUT = self.config['timeout']
         except:
             self.TIMEOUT = 5  # default timeout of 5 seconds
 
-    ADAPTER_CONFIG: dict
+    ALPACA_CONFIG: dict
     TIMEOUT: int
     STOCKS: list
     BUYING_POWER: int
+
+    MONGO_URI: str

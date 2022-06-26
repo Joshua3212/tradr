@@ -1,1 +1,2 @@
-alpaca-trade-api
+pymongo[srv]~=4.1.1
+alpaca_trade_api

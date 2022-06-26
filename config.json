@@ -1,8 +1,0 @@
-{
-  "adapter_config": {
-    "_comment": "example alpaca configuration",
-    "endpoint": "https://paper-api.alpaca.markets",
-    "api_key_id": "api_key_id",
-    "secret_key": "secret_key"
-  }
-}

@@ -18,3 +18,5 @@ A program (soon to be) capable of (theoretically) trading shares
 
 Adapters are integrations for stockbrokers like [Alpaca]("https://alpaca.markets/").
 Those integrations are used to both get information about stocks / their current pricing and purchase / sell them
+
+
