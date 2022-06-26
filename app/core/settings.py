@@ -23,6 +23,8 @@ class Settings:
         self.LONG_TERM_GAIN_TIMEFRAME = self.config["long_term_gain_timeframe"]  # in whatever currency
         self.SHORT_TERM_GAIN_TIMEFRAME = self.config["short_term_gain_timeframe"]
 
+        self.TIMEFRAME_GAP = self.config["timeframe_gap"]
+
         try:
             self.TIMEOUT = self.config['timeout']
         except:
@@ -37,3 +39,5 @@ class Settings:
 
     LONG_TERM_GAIN_TIMEFRAME: int  # in seconds
     SHORT_TERM_GAIN_TIMEFRAME: int  # in seconds
+
+    TIMEFRAME_GAP: int  # the gap between two bar entries in minutes

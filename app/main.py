@@ -1,11 +1,12 @@
 # Initialize Adapter
 import time
 
-from alpaca_trade_api import REST
+from alpaca_trade_api import REST, TimeFrame, TimeFrameUnit
 from alpaca_trade_api.common import URL
 from pymongo import MongoClient
 
 from app.core.settings import Settings
+from app.utils.dates import get_current_date, get_past_date
 from app.utils.logger import Logger
 
 _settings = Settings()
@@ -39,8 +40,15 @@ _logger.log(f"Buying power is set to {_settings.BUYING_POWER}")
 _logger.log(f"Stocks is set to {','.join(_settings.STOCKS)}")
 
 while True:
-    # run
+    for stock in _settings.STOCKS:
+        # get data for long_term_gain_timeframe
 
+        bar_iter = _api.get_bars(stock, TimeFrame(_settings.TIMEFRAME_GAP, TimeFrameUnit.Minute),
+                                 get_past_date(_settings.LONG_TERM_GAIN_TIMEFRAME),
+                                 get_current_date(),
+                                 adjustment="raw")
+        for bar in bar_iter:
+            print(bar)
     time.sleep(
         _settings.TIMEOUT
     )
