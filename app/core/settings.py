@@ -16,9 +16,12 @@ class Settings:
         # initialize variables
         self.ALPACA_CONFIG = self.config['alpaca_config']
 
-        self.stocks = self.config["stocks"]  # a list of stocks to query / buy
-        self.buying_power = self.config["buying_power"]  # in whatever currency
+        self.STOCKS = self.config["stocks"]  # a list of stocks to query / buy
+        self.BUYING_POWER = self.config["buying_power"]  # in whatever currency
         self.MONGO_URI = self.config["mongo_uri"]
+
+        self.LONG_TERM_GAIN_TIMEFRAME = self.config["long_term_gain_timeframe"]  # in whatever currency
+        self.SHORT_TERM_GAIN_TIMEFRAME = self.config["short_term_gain_timeframe"]
 
         try:
             self.TIMEOUT = self.config['timeout']
@@ -31,3 +34,6 @@ class Settings:
     BUYING_POWER: int
 
     MONGO_URI: str
+
+    LONG_TERM_GAIN_TIMEFRAME: int  # in seconds
+    SHORT_TERM_GAIN_TIMEFRAME: int  # in seconds

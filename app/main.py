@@ -28,12 +28,15 @@ Main loop that runs until stopped
 _logger.log("""
 ___________                  .___       
 \__    ___/___________     __| _/______ 
-  |    |  \_  __ \__  \   / __ |\_  __ \
+  |    |  \_  __ \__  \   / __ |\_  __ \\
   |    |   |  | \// __ \_/ /_/ | |  | \/
   |____|   |__|  (____  /\____ | |__|   
                       \/      \/        
 """)
-_logger.log("Tradr started")
+_logger.log("Tradr started successfully ✅")
+_logger.log(f"Timeout is set to {_settings.TIMEOUT} seconds")
+_logger.log(f"Buying power is set to {_settings.BUYING_POWER}")
+_logger.log(f"Stocks is set to {','.join(_settings.STOCKS)}")
 
 while True:
     # run

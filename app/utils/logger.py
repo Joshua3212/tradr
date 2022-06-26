@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import time
+from datetime import datetime
 
 from pymongo import MongoClient
 
@@ -21,7 +22,7 @@ class Logger:
         :return:
         :rtype:
         """
-        print(f"[{time.time()}] [{type.upper()}] {msg}")
+        print(f"[{datetime.now()}] [{type.upper()}] {msg}")
 
     def event(self, msg_or_data: str | dict, event: str, type: str = "info", meta: dict = {}) -> None:
         """
@@ -40,7 +41,7 @@ class Logger:
         :rtype:
         """
 
-        print(f"[{time.time()}] [{type.upper()}] [{event.upper()}] {str(msg_or_data)}")
+        print(f"[{datetime.now()}] [{type.upper()}] [{event.upper()}] {str(msg_or_data)}")
         self.db["events"][event].insert_one({
             "data": msg_or_data,
             "meta": {},
