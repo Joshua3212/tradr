@@ -16,4 +16,15 @@ class Settings:
         # initialize variables
         self.ADAPTER_CONFIG = self.config['adapter_config']
 
-    ADAPTER_CONFIG: str
+        self.stocks = self.config["stocks"]  # a list of stocks to query / buy
+        self.buying_power = self.config["buying_power"]  # in whatever currency
+
+        try:
+            self.TIMEOUT = self.config['timeout']
+        except:
+            self.TIMEOUT = 5  # default timeout of 5 seconds
+
+    ADAPTER_CONFIG: dict
+    TIMEOUT: int
+    STOCKS: list
+    BUYING_POWER: int
