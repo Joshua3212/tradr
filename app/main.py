@@ -5,6 +5,7 @@ from pymongo import MongoClient
 
 from app.alpaca import get_trades_iter_for_stock
 from app.core.settings import Settings
+from app.sanity import make_decision
 from app.utils.logger import Logger
 
 _settings = Settings()
@@ -36,11 +37,22 @@ async def trade_callback(b):
 
 def main():
     while True:
+        buy = []
+        sell = []
+
         for stock in _settings.STOCKS:
-            trades_iter = get_trades_iter_for_stock(stock.upper())
-            for trade in trades_iter:
-                print(stock)
-                print(trade.p)
+            stock = stock.upper()
+            trades_iter = get_trades_iter_for_stock(stock)
+
+            res = make_decision([i.p for i in trades_iter])
+
+            if res == "buy":
+                buy.append(stock)
+            elif res == "sell":
+                sell.append(stock)
+
+        print(buy)
+        print(sell)
 
         time.sleep(_settings.TIMEOUT)
 

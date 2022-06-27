@@ -5,7 +5,10 @@ _settings = Settings()
 
 
 def make_decision(prices: list):
+    result = None
+
     latest_price = prices[len(prices) - 1]
+
     max_price = max(prices)
     min_price = min(prices)
     min_index = prices.index(min_price)
@@ -25,29 +28,19 @@ def make_decision(prices: list):
     if max_index != 0:
         avg_prices_before_max_price = avg_prices_before_max_price / max_index
 
-    print(min_index)
-    print(avg_prices_before_min_price)
-
     if latest_price > min_price and latest_price + _settings.MIN_STOCK_DROP < avg_prices_before_min_price:
         """
             buy it I guess
         """
-        return "buy"
+        result = "buy"
 
     if latest_price < max_price and latest_price - _settings.MIN_STOCK_DROP < avg_prices_before_max_price:
         """
             sell it I guess
         """
-        return "sell"
-    if latest_price == min_price:
-        """
-            We'd expect the stock to drop further thus we wait
-        """
-        return "wait"
+        result = "sell"
 
-    if latest_price == max_price:
-        """
-            The price is rising thus no optimal opportunity to invest exists,
-            since we can only speculate on how long it keeps on rising
-        """
-        return "wait"
+    if not result:
+        result = "wait"
+
+    return result
