@@ -26,6 +26,7 @@ class Settings:
         self.TIMEFRAME_GAP = self.config["timeframe_gap"]
 
         self.CURRENT_DATE_OFFSET = self.config["current_date_offset"]
+        self.MIN_STOCK_DROP = self.config["min_stock_drop"]
 
         try:
             self.TIMEOUT = self.config['timeout']
@@ -44,3 +45,5 @@ class Settings:
 
     TIMEFRAME_GAP: int  # the gap between two bar entries in minutes
     CURRENT_DATE_OFFSET: int  # in minutes
+
+    MIN_STOCK_DROP: int  # in the selected currency

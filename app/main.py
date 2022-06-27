@@ -1,31 +1,13 @@
 # Initialize Adapter
 import time
 
-from alpaca_trade_api import REST, Stream
-from alpaca_trade_api.common import URL
 from pymongo import MongoClient
 
+from app.alpaca import get_trades_iter_for_stock
 from app.core.settings import Settings
 from app.utils.logger import Logger
 
 _settings = Settings()
-
-# alpaca connection
-_api = REST(
-    key_id=_settings.ALPACA_CONFIG["api_key_id"],
-    secret_key=_settings.ALPACA_CONFIG["secret_key"],
-    base_url=URL(_settings.ALPACA_CONFIG["endpoint"])
-)
-
-_stream = Stream(
-    key_id=_settings.ALPACA_CONFIG["api_key_id"],
-    secret_key=_settings.ALPACA_CONFIG["secret_key"],
-    base_url=URL(_settings.ALPACA_CONFIG["endpoint"]),
-    data_feed="iex",
-    websocket_params={
-        "ping_interval": _settings.TIMEFRAME_GAP
-    }
-)
 
 _db = MongoClient(_settings.MONGO_URI)
 _logger = Logger(_db)
@@ -53,14 +35,14 @@ async def trade_callback(b):
 
 
 def main():
-    for stock in _settings.STOCKS:
-        stock = stock.upper()
-        _stream.subscribe_trades(
-            trade_callback, stock
-        )
+    while True:
+        for stock in _settings.STOCKS:
+            trades_iter = get_trades_iter_for_stock(stock.upper())
+            for trade in trades_iter:
+                print(stock)
+                print(trade.p)
 
-    time.sleep(3)
-    _stream.run()
+        time.sleep(_settings.TIMEOUT)
 
 
 if __name__ == "__main__":

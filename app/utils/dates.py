@@ -1,13 +1,17 @@
 import datetime
 
+from app.core.settings import Settings
 
-def get_current_date(current_date_offset: int):
+_settings = Settings()
+
+
+def get_current_date():
     current_date = datetime.datetime.now(datetime.timezone.utc)
-    timedelta = datetime.timedelta(minutes=current_date_offset)
+    timedelta = datetime.timedelta(minutes=_settings.CURRENT_DATE_OFFSET)
     return (current_date - timedelta).isoformat()
 
 
-def get_past_date(minutes: int, current_date_offset: int):
+def get_past_date(minutes: int):
     current_date = datetime.datetime.now(datetime.timezone.utc)
-    timedelta = datetime.timedelta(minutes=minutes + current_date_offset)
+    timedelta = datetime.timedelta(minutes=(minutes + _settings.CURRENT_DATE_OFFSET))
     return (current_date - timedelta).isoformat()
