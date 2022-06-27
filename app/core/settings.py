@@ -25,6 +25,8 @@ class Settings:
 
         self.TIMEFRAME_GAP = self.config["timeframe_gap"]
 
+        self.CURRENT_DATE_OFFSET = self.config["current_date_offset"]
+
         try:
             self.TIMEOUT = self.config['timeout']
         except:
@@ -37,7 +39,8 @@ class Settings:
 
     MONGO_URI: str
 
-    LONG_TERM_GAIN_TIMEFRAME: int  # in seconds
-    SHORT_TERM_GAIN_TIMEFRAME: int  # in seconds
+    LONG_TERM_GAIN_TIMEFRAME: int  # in minutes
+    SHORT_TERM_GAIN_TIMEFRAME: int  # in minutes
 
     TIMEFRAME_GAP: int  # the gap between two bar entries in minutes
+    CURRENT_DATE_OFFSET: int  # in minutes
