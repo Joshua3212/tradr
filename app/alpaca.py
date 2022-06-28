@@ -1,4 +1,4 @@
-from alpaca_trade_api import REST, TimeFrame
+from alpaca_trade_api import REST, TimeFrame, TimeFrameUnit
 from alpaca_trade_api.common import URL
 from alpaca_trade_api.entity import Trade
 
@@ -30,8 +30,9 @@ def get_price_of_stocks(stocks: list) -> int:
 
 
 def get_trades_iter_for_stock(stock_id: str) -> [Trade]:
-    return _api.get_trades_iter(stock_id, get_past_date(_settings.LONG_TERM_GAIN_TIMEFRAME), get_current_date(),
-                                limit=10)
+    return _api.get_bars_iter(stock_id, TimeFrame(1, TimeFrameUnit.Hour),
+                              get_past_date(_settings.TRADE_CHANGE_TIMEFRAME),
+                              get_current_date())
 
 
 def submit_order(stock_id: str, quantity: int, intension: str):

@@ -20,8 +20,7 @@ class Settings:
         self.BUYING_POWER = self.config["buying_power"]  # in whatever currency
         self.MONGO_URI = self.config["mongo_uri"]
 
-        self.LONG_TERM_GAIN_TIMEFRAME = self.config["long_term_gain_timeframe"]  # in whatever currency
-        self.SHORT_TERM_GAIN_TIMEFRAME = self.config["short_term_gain_timeframe"]
+        self.TRADE_CHANGE_TIMEFRAME = self.config["trade_change_timeframe"]  # in whatever currency
 
         self.TIMEFRAME_GAP = self.config["timeframe_gap"]
 
@@ -40,8 +39,7 @@ class Settings:
 
     MONGO_URI: str
 
-    LONG_TERM_GAIN_TIMEFRAME: int  # in minutes
-    SHORT_TERM_GAIN_TIMEFRAME: int  # in minutes
+    TRADE_CHANGE_TIMEFRAME: int  # in minutes
 
     TIMEFRAME_GAP: int  # the gap between two bar entries in minutes
     CURRENT_DATE_OFFSET: int  # in minutes

@@ -44,15 +44,18 @@ def main():
             stock = stock.upper()
             trades_iter = get_trades_iter_for_stock(stock)
 
-            res = make_decision([i.p for i in trades_iter])
+            prices = [i.o for i in trades_iter]
+            res = make_decision(prices)
 
             if res == "buy":
                 buy.append(stock)
             elif res == "sell":
                 sell.append(stock)
 
-        print(buy)
-        print(sell)
+            print(stock)
+            print(prices)
+            print(res)
+            print("----")
 
         time.sleep(_settings.TIMEOUT)
 
