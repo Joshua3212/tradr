@@ -4,8 +4,9 @@ A program (soon to be) capable of (theoretically) trading shares
 
 ### Concept
 
-Tradr tries to match a by you given buy trend to the actual market trend.
-If that is the case tradr will purchase a stock, otherwise a sell / wait is the expected result.
+Tradr tries to match a by you given trend to the current actual market trend.
+If for instance a buy trend and the market trend match a buy / sell action will be executed.
+Otherwise Tradr will wait one cycle and repeat the same again.
 
 ### Getting started
 
