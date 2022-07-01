@@ -16,6 +16,8 @@ class Logger:
         Log simply logs a message to the console
 
 
+        :param write_to_log_file:
+        :type write_to_log_file:
         :param msg:
         :type msg:
         :param type:
