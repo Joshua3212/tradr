@@ -5,12 +5,13 @@ from pymongo import MongoClient
 
 from app.alpaca import get_trades_iter_for_stock
 from app.core.settings import Settings
-from app.sanity import make_decision
+from app.predict import get_difference
 from app.utils.logger import Logger
 
 _settings = Settings()
 
 _db = MongoClient(_settings.MONGO_URI)
+
 _logger = Logger(_db)
 
 """
@@ -31,10 +32,6 @@ _logger.log(f"Timeout is set to {_settings.TIMEOUT} seconds")
 _logger.log(f"Buying power is set to {_settings.BUYING_POWER}")
 
 
-async def trade_callback(b):
-    print(b)
-
-
 def main():
     while True:
         buy = []
@@ -45,12 +42,20 @@ def main():
             trades_iter = get_trades_iter_for_stock(stock)
 
             prices = [i.o for i in trades_iter]
-            res = make_decision(prices)
 
-            if res == "buy":
-                buy.append(stock)
-            elif res == "sell":
-                sell.append(stock)
+            res = 0
+            for i in _settings.TRENDS["buy"]:
+                res = get_difference(prices, i)
+
+            for i in _settings.TRENDS["sell"]:
+                res = get_difference(prices, i)
+
+            if res is not None:
+                if res <= _settings.MIN_TREND_SIMILARITY:
+                    buy.append(stock)
+
+                elif res >= _settings.MIN_TREND_SIMILARITY:
+                    sell.append(stock)
 
             print(stock)
             print(prices)

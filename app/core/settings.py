@@ -22,10 +22,9 @@ class Settings:
 
         self.TRADE_CHANGE_TIMEFRAME = self.config["trade_change_timeframe"]  # in whatever currency
 
-        self.TIMEFRAME_GAP = self.config["timeframe_gap"]
-
-        self.CURRENT_DATE_OFFSET = self.config["current_date_offset"]
-        self.MIN_STOCK_DROP = self.config["min_stock_drop"]
+        self.DATE_OFFSET = self.config["date_offset"]
+        self.MIN_TREND_SIMILARITY = self.config["min_trend_similarity"]
+        self.TRENDS = self.config["trends"]
 
         try:
             self.TIMEOUT = self.config['timeout']
@@ -41,7 +40,7 @@ class Settings:
 
     TRADE_CHANGE_TIMEFRAME: int  # in minutes
 
-    TIMEFRAME_GAP: int  # the gap between two bar entries in minutes
-    CURRENT_DATE_OFFSET: int  # in minutes
+    DATE_OFFSET: int  # in minutes
 
-    MIN_STOCK_DROP: int  # in the selected currency
+    MIN_TREND_SIMILARITY: int  # in the selected currency
+    TRENDS: dict
