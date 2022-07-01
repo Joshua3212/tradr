@@ -11,10 +11,10 @@ class Settings:
         Initialize the settings class with the local.config.json file.
         """
         try:
-            with open('config.json') as config_file:
+            with open('local.config.json') as config_file:
                 self.config = json.load(config_file)
         except Exception:
-            with open('local.config.json') as config_file:
+            with open('config.json') as config_file:
                 self.config = json.load(config_file)
 
         # initialize variables

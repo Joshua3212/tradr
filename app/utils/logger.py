@@ -1,16 +1,17 @@
 from __future__ import annotations
 
-import time
 from datetime import datetime
 
-from pymongo import MongoClient
+
+class FileOrDirectoryNotExistingException(Exception):
+    pass
 
 
 class Logger:
-    def __init__(self, db: MongoClient):
-        self.db = db
+    def __init__(self, log_dir: str = "./logs/"):
+        self.log_dir = log_dir
 
-    def log(self, msg: str, type: str = "info") -> None:
+    def log(self, msg: str, type: str = "INFO", write_to_log_file: bool = True) -> str:
         """
         Log simply logs a message to the console
 
@@ -22,28 +23,16 @@ class Logger:
         :return:
         :rtype:
         """
-        print(f"[{datetime.now()}] [{type.upper()}] {msg}")
+        line = f"[{datetime.now()}] [{type.upper()}] {msg}"
+        print(line)
+        if write_to_log_file:
+            self.write_line_to_file(type, line)
+        return line
 
-    def event(self, msg_or_data: str | dict, event: str, type: str = "info", meta: dict = {}) -> None:
-        """
-        Events are saved to the database
+    def write_line_to_file(self, filename: str, line: str) -> None:
+        try:
+            with open(f"{self.log_dir}{filename}", "a") as f:
+                f.write(line + "\n")
 
-        database : Events
-        collection: event param
-
-        :param msg:
-        :type msg:
-        :param event:
-        :type event:
-        :param type:
-        :type type:
-        :return:
-        :rtype:
-        """
-
-        print(f"[{datetime.now()}] [{type.upper()}] [{event.upper()}] {str(msg_or_data)}")
-        self.db["events"][event].insert_one({
-            "data": msg_or_data,
-            "meta": {},
-            "createdAt": int(time.time())
-        })
+        except:
+            raise FileOrDirectoryNotExistingException

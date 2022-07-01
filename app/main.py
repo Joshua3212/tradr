@@ -1,18 +1,14 @@
 # Initialize Adapter
 import time
 
-from pymongo import MongoClient
-
-from app.alpaca import get_trades_iter_for_stock
+from app.alpaca import get_bars_iter_for_stock, get_clock
 from app.core.settings import Settings
 from app.predict import get_difference
 from app.utils.logger import Logger
 
 _settings = Settings()
 
-_db = MongoClient(_settings.MONGO_URI)
-
-_logger = Logger(_db)
+_logger = Logger()
 
 """
 Main loop that runs until stopped
@@ -37,31 +33,47 @@ def main():
         buy = []
         sell = []
 
-        for stock in _settings.STOCKS:
-            stock = stock.upper()
-            trades_iter = get_trades_iter_for_stock(stock)
+        if get_clock().is_open:  # only queue orders if the market is open / ready
+            for stock in _settings.STOCKS:
+                stock = stock.upper()
+                trades_iter = get_bars_iter_for_stock(stock)
 
-            prices = [i.o for i in trades_iter]
+                prices = [i.o for i in trades_iter]
 
-            res = 0
-            for i in _settings.TRENDS["buy"]:
-                res = get_difference(prices, i)
+                res = 0
+                for i in _settings.TRENDS["buy"]:
+                    res = get_difference(prices, i)
 
-            for i in _settings.TRENDS["sell"]:
-                res = get_difference(prices, i)
+                for i in _settings.TRENDS["sell"]:
+                    res = get_difference(prices, i)
 
-            if res is not None:
-                if res <= _settings.MIN_TREND_SIMILARITY:
-                    buy.append(stock)
+                if res is not None:
+                    if res <= _settings.MIN_TREND_SIMILARITY:
+                        buy.append(stock)
 
-                elif res >= _settings.MIN_TREND_SIMILARITY:
-                    sell.append(stock)
+                    elif res >= _settings.MIN_TREND_SIMILARITY:
+                        sell.append(stock)
 
-            print(stock)
-            print(prices)
-            print(res)
-            print("----")
+            _logger.log(
+                f"Evaluation completed successfully", "DEBUG"
+            )
+            _logger.log(
+                f"Results: buy={','.join(buy)} sell={','.join(sell)}", "INFO"
+            )
 
+            # send out orders
+
+            _logger.log(
+                f"Sending out orders", "DEBUG"
+            )
+
+
+
+        else:
+
+            _logger.log(
+                f"Market is closed", "INFO"
+            )
         time.sleep(_settings.TIMEOUT)
 
 

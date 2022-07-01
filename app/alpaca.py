@@ -3,7 +3,6 @@ from alpaca_trade_api.common import URL
 from alpaca_trade_api.entity import Trade
 
 from app.core.settings import Settings
-from app.utils.dates import get_past_date, get_current_date
 
 _settings = Settings()
 
@@ -14,25 +13,14 @@ _api = REST(
 )
 
 
-def get_price_of_stocks(stocks: list) -> int:
-    total_price = 0
-
-    for stock in stocks:
-        bars = _api.get_bars(
-            stock,
-            TimeFrame.Minute,
-            get_current_date(),
-            get_current_date()
-        )
-
-        if len(bars) > 0:
-            total_price += bars[0].p
+def get_clock():
+    return _api.get_clock()
 
 
-def get_trades_iter_for_stock(stock_id: str) -> [Trade]:
-    return _api.get_bars_iter(stock_id, TimeFrame(1, TimeFrameUnit.Hour),
-                              get_past_date(_settings.TRADE_CHANGE_TIMEFRAME),
-                              get_current_date())
+def get_bars_iter_for_stock(symbol: str, timeframe: TimeFrame = TimeFrame(1, TimeFrameUnit.Hour)) -> [Trade]:
+    return _api.get_bars_iter(
+        symbol, timeframe, limit=10
+    )
 
 
 def submit_order(stock_id: str, quantity: int, intension: str):
@@ -52,3 +40,9 @@ def submit_order(stock_id: str, quantity: int, intension: str):
     return _api.submit_order(
         stock_id, quantity, intension, "market", "day"
     )
+
+
+def get_positions(symbol: str = None):
+    if symbol:
+        return _api.get_position(symbol)
+    return _api.list_positions()
