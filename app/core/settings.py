@@ -3,15 +3,19 @@ import json
 
 class Settings:
     """
-    This settings config can be used to retrieve settings from the config.json file.
+    This settings config can be used to retrieve settings from the local.config.json file.
     """
 
     def __init__(self):
         """
-        Initialize the settings class with the config.json file.
+        Initialize the settings class with the local.config.json file.
         """
-        with open('config.json') as config_file:
-            self.config = json.load(config_file)
+        try:
+            with open('config.json') as config_file:
+                self.config = json.load(config_file)
+        except Exception:
+            with open('local.config.json') as config_file:
+                self.config = json.load(config_file)
 
         # initialize variables
         self.ALPACA_CONFIG = self.config['alpaca_config']

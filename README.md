@@ -4,10 +4,5 @@ A program (soon to be) capable of (theoretically) trading shares
 
 ### Concept
 
-Predictions are entirely based on the trend (which is a bad idea)
-basically a down-trend with a recent (small) up spike means a buy and the opposite is interpreted as a reason to sell
-
-# Todo
-
-- figure out a way to judge how many shares to buy
-- figure out a way how many shares to sell
+Tradr tries to match a by you given buy trend to the actual market trend.
+If that is the case tradr will purchase a stock, otherwise a sell / wait is the expected result. 
