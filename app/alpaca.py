@@ -23,22 +23,22 @@ def get_bars_iter_for_stock(symbol: str, timeframe: TimeFrame = TimeFrame(1, Tim
     )
 
 
-def submit_order(stock_id: str, quantity: int, intension: str):
+def submit_order(stock_id: str, quantity: int, intention: str):
     """
 
-    Note: an intension is either a buy or a sell
+    Note: an intention is either a buy or a sell
 
     :param stock_id:
     :type stock_id:
     :param quantity:
     :type quantity:
-    :param intension:
-    :type intension:
+    :param intention:
+    :type intention:
     :return:
     :rtype:
     """
     return _api.submit_order(
-        stock_id, quantity, intension, "market", "day"
+        stock_id, quantity, intention, "market", "day"
     )
 
 

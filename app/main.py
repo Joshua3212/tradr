@@ -3,7 +3,7 @@ import time
 
 from app.alpaca import get_bars_iter_for_stock, get_clock
 from app.core.settings import Settings
-from app.predict import get_difference
+from app.predict import get_relative_difference
 from app.utils.logger import Logger
 
 _settings = Settings()
@@ -42,10 +42,10 @@ def main():
 
                 res = 0
                 for i in _settings.TRENDS["buy"]:
-                    res = get_difference(prices, i)
+                    res = get_relative_difference(prices, i)
 
                 for i in _settings.TRENDS["sell"]:
-                    res = get_difference(prices, i)
+                    res = get_relative_difference(prices, i)
 
                 if res is not None:
                     if res <= _settings.MIN_TREND_SIMILARITY:
