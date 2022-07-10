@@ -29,6 +29,7 @@ class Settings:
         self.DATE_OFFSET = self.config["date_offset"]
         self.MIN_TREND_SIMILARITY = self.config["min_trend_similarity"]
         self.TRENDS = self.config["trends"]
+        self.BARS_LIMIT = self.config["bars_limit"]
 
         try:
             self.TIMEOUT = self.config['timeout']
@@ -48,3 +49,4 @@ class Settings:
 
     MIN_TREND_SIMILARITY: int  # in the selected currency
     TRENDS: dict
+    BARS_LIMIT: int

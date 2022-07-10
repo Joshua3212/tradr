@@ -1,3 +1,10 @@
+
+# Logs
+INFO
+DEBUG
+SELL
+BUY
+
 # config files
 local.config.json
 

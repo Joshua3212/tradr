@@ -19,7 +19,7 @@ def get_clock():
 
 def get_bars_iter_for_stock(symbol: str, timeframe: TimeFrame = TimeFrame(1, TimeFrameUnit.Hour)) -> [Trade]:
     return _api.get_bars_iter(
-        symbol, timeframe, limit=10
+        symbol, timeframe, limit=_settings.BARS_LIMIT
     )
 
 
