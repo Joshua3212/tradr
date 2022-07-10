@@ -1,7 +1,7 @@
 # Initialize Adapter
 import time
 
-from app.alpaca import get_bars_iter_for_stock, get_clock
+from app.alpaca import get_bars_iter_for_stock, submit_order
 from app.core.settings import Settings
 from app.predict import get_relative_difference
 from app.utils.logger import Logger
@@ -33,12 +33,15 @@ def main():
         buy = []
         sell = []
 
-        if get_clock().is_open:  # only queue orders if the market is open / ready
+        # if get_clock().is_open:  # only queue orders if the market is open / ready
+        if True:
             for stock in _settings.STOCKS:
                 stock = stock.upper()
                 trades_iter = get_bars_iter_for_stock(stock)
 
                 prices = [i.o for i in trades_iter]
+
+                prices = [100, 100, 100, 100, 100]
 
                 res = 0
                 for i in _settings.TRENDS["buy"]:
@@ -67,6 +70,23 @@ def main():
                 f"Sending out orders", "DEBUG"
             )
 
+            qtt = 100
+            for i in buy:
+                submit_order(
+                    i, qtt, "buy"
+                )
+
+                logger.log(
+                    f"BUY {i} for {qtt}", "BUY"
+                )
+
+            for i in sell:
+                submit_order(
+                    i, qtt, "sell"
+                )
+                logger.log(
+                    f"SELL {i} for {qtt}", "SELL"
+                )
 
 
         else:
