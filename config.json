@@ -5,20 +5,13 @@
     "api_key_id": "key_id",
     "secret_key": "secret_key"
   },
-  "mongo_uri": "cluster_uri",
   "buying_power": 10000,
-  "_stocks_comment": "Stocks you want to buy/sell have to be listed here",
-  "stocks": [
-    "AAPL",
-    "TSLA",
-    "AMZN"
-  ],
-  "_config_comment": "everything time related except for the timeout are in minutes",
+  "stocks": [],
   "trade_change_timeframe": 1440,
   "limit": 10,
   "date_offset": 20,
   "min_trend_similarity": 5,
-  "_trends_comment": "Tradr tries to match a supplied trend to a stocks actual trend. Enter your own trends below (wait trends are wip)",
+  "bars_limit": 5,
   "trends": {
     "buy": [
       [
